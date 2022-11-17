@@ -166,6 +166,11 @@ function CustomNosferatu() {
         searchFocusOffset={searchFocusIndex}
         treeData={getDaum(daum)}
         onChange={handleChange}
+        searchFinishCallback={(matches) =>
+          setSearchFocusIndex(
+            matches.length > 0 ? searchFocusIndex % matches.length : 0,
+          )
+        }
         generateNodeProps={({ node, path }) => ({
           buttons: [
             <Button
