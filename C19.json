@@ -1,0 +1,245 @@
+{
+  "data": [
+    {
+      "blockId": "C19",
+      "name": "Pedro Merola - Santa Fé (P) (S)",
+      "abrv": "Ped",
+      "blockParent": "0",
+      "leafParent": false,
+      "date": "2022-10-28T10:40:09.885236887Z",
+      "data": {
+        "windSpeed": 1.1575,
+        "solarIrradiation": 74.669544,
+        "temperature": 21.614945,
+        "rain": 0,
+        "relativeHumidity": 86.52824
+      },
+      "children": [
+        {
+          "blockId": "F2987",
+          "name": "Fazenda São Pedro",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.885100398Z",
+          "data": {
+            "windSpeed": 0.1,
+            "solarIrradiation": 74.668633,
+            "temperature": 21.315835,
+            "rain": 0,
+            "relativeHumidity": 88.119231
+          },
+          "children": [
+            {
+              "blockId": "B3218",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2987",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.885218712Z",
+              "data": {
+                "windSpeed": 0.1,
+                "solarIrradiation": 74.668633,
+                "temperature": 21.315835,
+                "rain": 0,
+                "relativeHumidity": 88.119231
+              },
+              "title": "Unidade padrão",
+              "parent": "F2987",
+              "children": []
+            }
+          ],
+          "title": "Fazenda São Pedro",
+          "parent": "C19"
+        },
+        {
+          "blockId": "F2990",
+          "name": "Fazenda São Francisco",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.885107145Z",
+          "data": {
+            "windSpeed": 0.105,
+            "solarIrradiation": 116.46137,
+            "temperature": 20.863649,
+            "rain": 0,
+            "relativeHumidity": 91.533959
+          },
+          "children": [
+            {
+              "blockId": "B3221",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2990",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.885093749Z",
+              "data": {
+                "windSpeed": 0.105,
+                "solarIrradiation": 116.46137,
+                "temperature": 20.863649,
+                "rain": 0,
+                "relativeHumidity": 91.533959
+              },
+              "title": "Unidade padrão",
+              "parent": "F2990",
+              "children": []
+            }
+          ],
+          "title": "Fazenda São Francisco",
+          "parent": "C19"
+        },
+        {
+          "blockId": "F2985",
+          "name": "Fazenda Santa Fé",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.885096018Z",
+          "data": {
+            "windSpeed": 0.79,
+            "solarIrradiation": 77.961164,
+            "temperature": 22.742811,
+            "rain": 0,
+            "relativeHumidity": 79.778591
+          },
+          "children": [
+            {
+              "blockId": "B3216",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2985",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.885216553Z",
+              "data": {
+                "windSpeed": 0.79,
+                "solarIrradiation": 77.961164,
+                "temperature": 22.742811,
+                "rain": 0,
+                "relativeHumidity": 79.778591
+              },
+              "title": "Unidade padrão",
+              "parent": "F2985",
+              "children": []
+            }
+          ],
+          "title": "Fazenda Santa Fé",
+          "parent": "C19",
+          "expanded": false
+        },
+        {
+          "blockId": "F2988",
+          "name": "Fazenda VS",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.88510243Z",
+          "data": {
+            "windSpeed": 1.32,
+            "solarIrradiation": 59.754107,
+            "temperature": 21.162966,
+            "rain": 0,
+            "relativeHumidity": 89.503557
+          },
+          "children": [
+            {
+              "blockId": "B3219",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2988",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.88524121Z",
+              "data": {
+                "windSpeed": 1.32,
+                "solarIrradiation": 59.754107,
+                "temperature": 21.162966,
+                "rain": 0,
+                "relativeHumidity": 89.503557
+              },
+              "title": "Unidade padrão",
+              "parent": "F2988",
+              "children": []
+            }
+          ],
+          "title": "Fazenda VS",
+          "parent": "C19",
+          "expanded": false
+        },
+        {
+          "blockId": "F2986",
+          "name": "Fazenda Santa Lúcia",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.885098086Z",
+          "data": {
+            "windSpeed": 3.02,
+            "solarIrradiation": 44.478959,
+            "temperature": 20.803462,
+            "rain": 0,
+            "relativeHumidity": 88.682032
+          },
+          "children": [
+            {
+              "blockId": "B3217",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2986",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.885239022Z",
+              "data": {
+                "windSpeed": 3.02,
+                "solarIrradiation": 44.478959,
+                "temperature": 20.803462,
+                "rain": 0,
+                "relativeHumidity": 88.682032
+              },
+              "title": "Unidade padrão",
+              "parent": "F2986",
+              "children": []
+            }
+          ],
+          "title": "Fazenda Santa Lúcia",
+          "parent": "C19"
+        },
+        {
+          "blockId": "F2989",
+          "name": "Fazenda Santo Antônio ",
+          "abrv": "Faz",
+          "blockParent": "C19",
+          "leafParent": false,
+          "date": "2022-10-28T10:40:09.885104474Z",
+          "data": {
+            "windSpeed": 1.61,
+            "solarIrradiation": 74.693028,
+            "temperature": 22.800949,
+            "rain": 0,
+            "relativeHumidity": 81.55207
+          },
+          "children": [
+            {
+              "blockId": "B3220",
+              "name": "Unidade padrão",
+              "abrv": "Uni",
+              "blockParent": "F2989",
+              "leafParent": true,
+              "date": "2022-10-28T10:40:09.885091435Z",
+              "data": {
+                "windSpeed": 1.61,
+                "solarIrradiation": 74.693028,
+                "temperature": 22.800949,
+                "rain": 0,
+                "relativeHumidity": 81.55207
+              },
+              "title": "Unidade padrão",
+              "parent": "F2989",
+              "children": []
+            }
+          ],
+          "title": "Fazenda Santo Antônio ",
+          "parent": "C19"
+        }
+      ]
+    }
+  ]
+}
