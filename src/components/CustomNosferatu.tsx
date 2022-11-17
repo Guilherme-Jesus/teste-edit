@@ -14,7 +14,6 @@ function CustomNosferatu() {
   const [searchString, setSearchString] = useState<string>('')
   const [searchFocusIndex, setSearchFocusIndex] = useState<number>(0)
   const [updateDaum, setUpdateDaum] = useState<Daum[]>([])
-  const [name, setName] = useState<string>('')
   useEffect(() => {
     axios.get('http://localhost:7010/data').then((res) => {
       setDaum(res.data)
@@ -95,7 +94,6 @@ function CustomNosferatu() {
       getNodeKey: ({ treeIndex }) => treeIndex,
       newNode: {
         title: 'new node',
-        subtitle: 'Novso Bloco',
       },
       addAsFirstChild: true,
     }).treeData as Daum[]
