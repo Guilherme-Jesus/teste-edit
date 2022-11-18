@@ -18,7 +18,7 @@ export interface Children {
 export type Daum = {
   id: string
   title: string
-  abrv: string
+  subtitle: string
   blockParent: string
   leafParent: boolean
   date: string

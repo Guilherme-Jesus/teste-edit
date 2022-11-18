@@ -48,28 +48,6 @@ function CustomNosferatu() {
   }
   console.log(updateDaum)
 
-  const handleSave = useCallback(() => {
-    if (updateDaum.length > 0) {
-      axios
-        .put(`http://localhost:7010/data/${updateDaum[0].id}`, {
-          id: updateDaum[0].id,
-          title: updateDaum[0].title,
-          abrv: updateDaum[0].abrv,
-          blockParent: updateDaum[0].blockParent,
-          leafParent: updateDaum[0].leafParent,
-          date: updateDaum[0].date,
-          data: updateDaum[0].data,
-          children: updateDaum[0].children,
-        })
-        .then((res) => {
-          setUpdateDaum(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  }, [updateDaum])
-
   const expandAll = useCallback(() => {
     const expanded = toggleExpandedForAll({
       treeData: daum,
@@ -85,6 +63,29 @@ function CustomNosferatu() {
     }) as Daum[]
     setDaum(expanded)
   }, [daum])
+
+  const handleSave = useCallback(() => {
+    if (updateDaum.length > 0) {
+      axios
+        .put(`http://localhost:7010/data/${updateDaum[0].id}`, {
+          id: updateDaum[0].id,
+          title: updateDaum[0].title,
+          subtitle: updateDaum[0].subtitle,
+          blockParent: updateDaum[0].blockParent,
+          leafParent: updateDaum[0].leafParent,
+          date: updateDaum[0].date,
+          data: updateDaum[0].data,
+          children: updateDaum[0].children,
+        })
+        .then((res) => {
+          setUpdateDaum(res.data)
+          expandAll()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [expandAll, updateDaum])
 
   /// create request post data
 
@@ -115,41 +116,6 @@ function CustomNosferatu() {
     setUpdateDaum(newDaum)
   }, [])
 
-  // const handleEdit = useCallback((daum: Daum[], path: number[], e: any) => {
-  //   e.preventDefault()
-  //   const newDaum = changeNodeAtPath({
-  //     treeData: daum,
-  //     path,
-  //     getNodeKey: ({ treeIndex }) => treeIndex,
-  //     newNode: {
-  //       title: e.target.value,
-  //       abrv: Math.round(e.target.value).toString(),
-  //       // blockParent:
-  //       // leafParent:
-  //       date: new Date(),
-  //       data: Math.ceil(e.target.value),
-  //     },
-  //   }) as Daum[]
-  //   setDaum(newDaum)
-  //   setUpdateDaum(newDaum)
-  // }, [])
-
-  const handleEdit = (path: number[], node: any, e: any) => {
-    setDaum((state) => {
-      const newDaum = changeNodeAtPath({
-        treeData: state,
-        path,
-        getNodeKey: ({ treeIndex }) => treeIndex,
-        newNode: {
-          ...node,
-          title: e.target.value,
-        },
-      }) as Daum[]
-      setUpdateDaum(newDaum)
-      return newDaum
-    })
-  }
-
   return (
     <div style={{ height: 800, width: 800 }}>
       <div
@@ -171,7 +137,6 @@ function CustomNosferatu() {
             >
               Save
             </Button>
-            ,
           </div>
         )}
       </div>
@@ -228,6 +193,25 @@ function CustomNosferatu() {
                       newNode: {
                         ...node,
                         title: e.target.value,
+                      },
+                    }) as Daum[]
+                    setUpdateDaum(newDaum)
+                    return newDaum
+                  })
+                }}
+              />
+              <input
+                type="text"
+                value={node.subtitle}
+                onChange={(e) => {
+                  setDaum((state) => {
+                    const newDaum = changeNodeAtPath({
+                      treeData: state,
+                      path,
+                      getNodeKey: ({ treeIndex }) => treeIndex,
+                      newNode: {
+                        ...node,
+                        subtitle: e.target.value,
                       },
                     }) as Daum[]
                     setUpdateDaum(newDaum)
