@@ -1,5 +1,7 @@
 import SortableTree, {
   addNodeUnderParent,
+  changeNodeAtPath,
+  getVisibleNodeCount,
   removeNodeAtPath,
   toggleExpandedForAll,
 } from '@nosferatu500/react-sortable-tree'
@@ -27,18 +29,18 @@ function CustomNosferatu() {
     [],
   )
 
-  const getDaum = (daum: Daum[]) => {
-    const get: Daum[] = daum.map((item) => {
-      return {
-        ...item,
-        blockId: item.blockId,
-        title: item.name,
-        parent: item.blockParent,
-        children: item.children ? getDaum(item.children) : [],
-      }
-    })
-    return get
-  }
+  // const getDaum = (daum: Daum[]) => {
+  //   const get: Daum[] = daum.map((item) => {
+  //     return {
+  //       ...item,
+  //       id: item.id,
+  //       title: item.title,
+  //       parent: item.blockParent,
+  //       children: item.children ? getDaum(item.children) : [],
+  //     }
+  //   })
+  //   return get
+  // }
 
   const handleChange = (daum: Daum[]) => {
     setUpdateDaum(daum)
@@ -49,9 +51,9 @@ function CustomNosferatu() {
   const handleSave = useCallback(() => {
     if (updateDaum.length > 0) {
       axios
-        .put(`http://localhost:7010/data/${updateDaum[0].blockId}`, {
-          blockId: updateDaum[0].blockId,
-          name: updateDaum[0].name,
+        .put(`http://localhost:7010/data/${updateDaum[0].id}`, {
+          id: updateDaum[0].id,
+          title: updateDaum[0].title,
           abrv: updateDaum[0].abrv,
           blockParent: updateDaum[0].blockParent,
           leafParent: updateDaum[0].leafParent,
@@ -93,7 +95,9 @@ function CustomNosferatu() {
       expandParent: true,
       getNodeKey: ({ treeIndex }) => treeIndex,
       newNode: {
-        title: 'new node',
+        title: 'Nova Área',
+        children: [],
+        subtitle: 'Nova Área',
       },
       addAsFirstChild: true,
     }).treeData as Daum[]
@@ -111,21 +115,40 @@ function CustomNosferatu() {
     setUpdateDaum(newDaum)
   }, [])
 
-  const handleEdit = useCallback(
-    (daum: Daum[], path: number[], title: string) => {
-      const newDaum = daum.map((item, index) => {
-        if (index === path[0]) {
-          return {
-            ...item,
-            title,
-          }
-        }
-        return item
-      })
-      setDaum(newDaum)
-    },
-    [],
-  )
+  // const handleEdit = useCallback((daum: Daum[], path: number[], e: any) => {
+  //   e.preventDefault()
+  //   const newDaum = changeNodeAtPath({
+  //     treeData: daum,
+  //     path,
+  //     getNodeKey: ({ treeIndex }) => treeIndex,
+  //     newNode: {
+  //       title: e.target.value,
+  //       abrv: Math.round(e.target.value).toString(),
+  //       // blockParent:
+  //       // leafParent:
+  //       date: new Date(),
+  //       data: Math.ceil(e.target.value),
+  //     },
+  //   }) as Daum[]
+  //   setDaum(newDaum)
+  //   setUpdateDaum(newDaum)
+  // }, [])
+
+  const handleEdit = (path: number[], node: any, e: any) => {
+    setDaum((state) => {
+      const newDaum = changeNodeAtPath({
+        treeData: state,
+        path,
+        getNodeKey: ({ treeIndex }) => treeIndex,
+        newNode: {
+          ...node,
+          title: e.target.value,
+        },
+      }) as Daum[]
+      setUpdateDaum(newDaum)
+      return newDaum
+    })
+  }
 
   return (
     <div style={{ height: 800, width: 800 }}>
@@ -160,11 +183,10 @@ function CustomNosferatu() {
           placeholder="Pesquisar"
         />
       </div>
-
       <SortableTree
         searchQuery={searchString}
         searchFocusOffset={searchFocusIndex}
-        treeData={getDaum(daum)}
+        treeData={daum}
         onChange={handleChange}
         searchFinishCallback={(matches) =>
           setSearchFocusIndex(
@@ -197,8 +219,20 @@ function CustomNosferatu() {
               <input
                 type="text"
                 value={node.title}
-                onChange={(event) => {
-                  handleEdit(daum, path, event.target.value)
+                onChange={(e) => {
+                  setDaum((state) => {
+                    const newDaum = changeNodeAtPath({
+                      treeData: state,
+                      path,
+                      getNodeKey: ({ treeIndex }) => treeIndex,
+                      newNode: {
+                        ...node,
+                        title: e.target.value,
+                      },
+                    }) as Daum[]
+                    setUpdateDaum(newDaum)
+                    return newDaum
+                  })
                 }}
               />
             </InputGroup>
