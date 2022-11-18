@@ -72,16 +72,16 @@ function CustomNosferatu() {
     const expanded = toggleExpandedForAll({
       treeData: daum,
       expanded: true,
-    })
-    setDaum(expanded as Daum[])
+    }) as Daum[]
+    setDaum(expanded)
   }, [daum])
 
   const collapseAll = useCallback(() => {
     const expanded = toggleExpandedForAll({
       treeData: daum,
       expanded: false,
-    })
-    setDaum(expanded as Daum[])
+    }) as Daum[]
+    setDaum(expanded)
   }, [daum])
 
   /// create request post data
@@ -90,7 +90,7 @@ function CustomNosferatu() {
     const newDaum = addNodeUnderParent({
       treeData: daum,
       parentKey: path[path.length - 1],
-      // expandParent: true,
+      expandParent: true,
       getNodeKey: ({ treeIndex }) => treeIndex,
       newNode: {
         title: 'new node',
