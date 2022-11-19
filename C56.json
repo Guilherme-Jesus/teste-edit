@@ -1,0 +1,24 @@
+{
+    "blocks": [
+        {
+            "blockId": "1",
+            "name": "N1",
+            "blockParent": "0"
+        },
+        {
+            "blockId": "2",
+            "name": "N2",
+            "blockParent": "0"
+        },
+        {
+            "blockId": "3",
+            "name": "N3",
+            "blockParent": "2"
+        },
+        {
+            "blockId": "4",
+            "name": "N4",
+            "blockParent": "3"
+        }
+    ]
+}
