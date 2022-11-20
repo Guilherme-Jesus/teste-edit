@@ -10,13 +10,15 @@ import '@nosferatu500/react-sortable-tree/style.css'
 import axios from 'axios'
 
 import { useCallback, useEffect, useState } from 'react'
-import { Button, InputGroup } from 'react-bootstrap'
+import { Button, ButtonGroup, InputGroup } from 'react-bootstrap'
 import { IListBlocks } from '../types'
 
 const CustomOrigin = () => {
   const [blocks, setBlocks] = useState<IListBlocks[]>([])
   const [searchString, setSearchString] = useState<string>('')
+  const [blockId, setBlockId] = useState<string>('')
   const [searchFocusIndex, setSearchFocusIndex] = useState<number>(0)
+  const [blocksAux, setBlocksAux] = useState<IListBlocks[]>([])
 
   const handleSearchStringChange = useCallback((event: any) => {
     setSearchString(event.target.value)
@@ -97,7 +99,7 @@ const CustomOrigin = () => {
   }
 
   const addNode = useCallback(
-    (path: number[]) => {
+    (path: number[], blockParent: string) => {
       const newBlocks = addNodeUnderParent({
         treeData: someOnlineAdvice.treeData,
         parentKey: path[path.length - 1],
@@ -107,7 +109,7 @@ const CustomOrigin = () => {
           blockId: Math.random().toString(36),
           name: 'Nova Área',
           abrv: 'Editar Abreviação',
-          blockParent: path.length > 1 ? path[path.length - 2] : '0',
+          blockParent,
           leafParent: false,
           date: new Date().toLocaleDateString(),
           data: {
@@ -122,8 +124,9 @@ const CustomOrigin = () => {
       }).treeData as IListBlocks[]
       console.log(newBlocks)
       setBlocks(newBlocks)
+      setBlockId(blockId)
     },
-    [someOnlineAdvice.treeData],
+    [blockId, someOnlineAdvice.treeData],
   )
 
   const removeNode = useCallback(
@@ -157,7 +160,7 @@ const CustomOrigin = () => {
                 handleSave()
               }}
             >
-              Save
+              Salvar
             </Button>
           </div>
         )}
@@ -182,24 +185,42 @@ const CustomOrigin = () => {
         }
         generateNodeProps={({ node, path }) => ({
           buttons: [
-            <Button
-              key={node.id}
-              variant="primary"
-              onClick={() => {
-                addNode(path)
-              }}
-            >
-              Criar
-            </Button>,
-            <Button
-              key={node.id}
-              variant="secondary"
-              onClick={() => {
-                removeNode(path)
-              }}
-            >
-              Remover
-            </Button>,
+            <ButtonGroup key={node.blockId}>
+              <Button
+                key={node.blockId}
+                variant="primary"
+                onClick={() => {
+                  axios.post('http://localhost:7010/blocks', {
+                    blockId: Math.random().toString(36),
+                    name: 'Nova Área',
+                    abrv: 'Editar Abreviação',
+                    blockParent: node.blockId,
+                    leafParent: false,
+                    date: new Date().toLocaleDateString(),
+                    data: {
+                      windSpeed: Math.floor(Math.random() * 100),
+                      solarIrradiation: Math.floor(Math.random() * 100),
+                      temperature: Math.floor(Math.random() * 100),
+                      rain: Math.floor(Math.random() * 100),
+                      relativeHumidity: Math.floor(Math.random() * 100),
+                    },
+                  })
+                  addNode(path, node.blockId)
+                }}
+              >
+                Criar
+              </Button>
+              <Button
+                key={node.blockId}
+                variant="secondary"
+                onClick={() => {
+                  axios.delete(`http://localhost:7010/blocks/${node.blockId}`)
+                  removeNode(path)
+                }}
+              >
+                Remover
+              </Button>
+            </ButtonGroup>,
           ],
           title: (
             <InputGroup>
