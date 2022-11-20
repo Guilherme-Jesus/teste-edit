@@ -18,7 +18,6 @@ const CustomOrigin = () => {
   const [searchString, setSearchString] = useState<string>('')
   const [blockId, setBlockId] = useState<string>('')
   const [searchFocusIndex, setSearchFocusIndex] = useState<number>(0)
-  const [blocksAux, setBlocksAux] = useState<IListBlocks[]>([])
 
   const handleSearchStringChange = useCallback((event: any) => {
     setSearchString(event.target.value)
