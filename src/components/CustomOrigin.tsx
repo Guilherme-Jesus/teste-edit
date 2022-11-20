@@ -35,7 +35,6 @@ const CustomOrigin = () => {
         ...node,
         title: node.name,
       })),
-
       getKey: (node) => node.blockId,
       getParentKey: (node) => node.blockParent,
       rootKey: '0',
@@ -108,17 +107,28 @@ const CustomOrigin = () => {
         getNodeKey: ({ treeIndex }) => treeIndex,
         newNode: {
           blockId: Math.random().toString(36),
-          blockParent: path[path.length - 1],
           name: 'Nova Área',
           abrv: 'Editar Abreviação',
+          blockParent: path.length > 1 ? path[path.length - 2] : '0',
+          leafParent: false,
+          date: new Date().toLocaleDateString(),
+          data: {
+            windSpeed: Math.floor(Math.random() * 100),
+            solarIrradiation: Math.floor(Math.random() * 100),
+            temperature: Math.floor(Math.random() * 100),
+            rain: Math.floor(Math.random() * 100),
+            relativeHumidity: Math.floor(Math.random() * 100),
+          },
         },
         addAsFirstChild: true,
       }).treeData as IListBlocks[]
+      console.log(newBlocks)
       setBlocks(newBlocks)
       setBlocksAux(newBlocks)
     },
     [someOnlineAdvice.treeData],
   )
+
   const removeNode = useCallback(
     (path: number[]) => {
       const newBlocks = removeNodeAtPath({
