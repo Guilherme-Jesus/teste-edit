@@ -16,7 +16,6 @@ import { IListBlocks } from '../types'
 const CustomOrigin = () => {
   const [blocks, setBlocks] = useState<IListBlocks[]>([])
   const [searchString, setSearchString] = useState<string>('')
-  const [blockId, setBlockId] = useState<string>('')
   const [searchFocusIndex, setSearchFocusIndex] = useState<number>(0)
   const handleSearchStringChange = useCallback((event: any) => {
     setSearchString(event.target.value)
@@ -122,9 +121,8 @@ const CustomOrigin = () => {
       }).treeData as IListBlocks[]
       console.log(newBlocks)
       setBlocks(newBlocks)
-      setBlockId(blockId)
     },
-    [blockId, someOnlineAdvice.treeData],
+    [someOnlineAdvice.treeData],
   )
 
   const removeNode = useCallback(
