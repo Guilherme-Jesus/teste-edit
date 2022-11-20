@@ -77,12 +77,12 @@ const CustomOrigin = () => {
       axios
         .put(`http://localhost:7010/blocks/${block.blockId}`, {
           blockId: block.blockId,
-          blockParent: block.blockParent.toString(),
           name: block.name,
           abrv: block.abrv,
-          data: block.data,
-          date: block.date,
+          blockParent: block.blockParent.toString(),
           leafParent: block.leafParent,
+          date: block.date,
+          data: block.data,
         })
         .then((res) => {
           setBlocksAux(res.data)
@@ -199,7 +199,7 @@ const CustomOrigin = () => {
             <InputGroup>
               <input
                 type="text"
-                value={node.title}
+                value={node.name}
                 onChange={(e) => {
                   setBlocks((state) => {
                     const newDaum = changeNodeAtPath({
