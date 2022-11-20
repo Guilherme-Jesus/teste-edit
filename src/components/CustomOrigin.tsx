@@ -15,7 +15,6 @@ import { IListBlocks } from '../types'
 
 const CustomOrigin = () => {
   const [blocks, setBlocks] = useState<IListBlocks[]>([])
-  const [blocksAux, setBlocksAux] = useState<IListBlocks[]>([])
   const [searchString, setSearchString] = useState<string>('')
   const [searchFocusIndex, setSearchFocusIndex] = useState<number>(0)
 
@@ -84,7 +83,7 @@ const CustomOrigin = () => {
           data: block.data,
         })
         .then((res) => {
-          setBlocksAux(res.data)
+          setBlocks(res.data)
           expandAll()
         })
         .catch((err) => {
@@ -95,7 +94,6 @@ const CustomOrigin = () => {
 
   const onChange = (treeData: IListBlocks[]) => {
     setBlocks(treeData)
-    setBlocksAux(treeData)
   }
 
   const addNode = useCallback(
@@ -124,7 +122,6 @@ const CustomOrigin = () => {
       }).treeData as IListBlocks[]
       console.log(newBlocks)
       setBlocks(newBlocks)
-      setBlocksAux(newBlocks)
     },
     [someOnlineAdvice.treeData],
   )
@@ -137,7 +134,6 @@ const CustomOrigin = () => {
         getNodeKey: ({ treeIndex }) => treeIndex,
       }) as IListBlocks[]
       setBlocks(newBlocks)
-      setBlocksAux(newBlocks)
     },
     [someOnlineAdvice.treeData],
   )
@@ -221,7 +217,6 @@ const CustomOrigin = () => {
                         name: e.target.value,
                       },
                     }) as IListBlocks[]
-                    setBlocksAux(newDaum)
                     return newDaum
                   })
                 }}
@@ -240,7 +235,6 @@ const CustomOrigin = () => {
                         abrv: e.target.value,
                       },
                     }) as IListBlocks[]
-                    setBlocksAux(newDaum)
                     return newDaum
                   })
                 }}
@@ -249,13 +243,6 @@ const CustomOrigin = () => {
           ),
         })}
       />
-      <ul>
-        {flatData.map(({ blockId, name, blockParent }) => (
-          <li key={blockId}>
-            id: {blockId}, name: {name}, parent: {blockParent || 'null'}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
