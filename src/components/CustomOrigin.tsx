@@ -41,19 +41,6 @@ const CustomOrigin = () => {
       rootKey: '0',
     }),
   }
-  const flatData = getFlatDataFromTree({
-    treeData: someOnlineAdvice.treeData,
-    getNodeKey: ({ node }) => node.blockId, // This ensures your "id" properties are exported in the path
-    ignoreCollapsed: false,
-  }).map(({ node, path }) => ({
-    blockId: node.blockId,
-    name: node.name,
-    abrv: node.abrv,
-    blockParent: path.length > 1 ? path[path.length - 2] : '0',
-    data: node.data,
-    date: node.date,
-    leafParent: node.leafParent,
-  }))
 
   const expandAll = useCallback(() => {
     const expanded = toggleExpandedForAll({
@@ -71,20 +58,40 @@ const CustomOrigin = () => {
     setBlocks(expanded)
   }, [someOnlineAdvice.treeData])
 
-  const handleSave = useCallback(() => {
-    if (flatData.length > 0) {
-      axios
-        .put(`http://localhost:7010/blocks/${flatData[0].blockId}`, flatData)
+  const flatData = getFlatDataFromTree({
+    treeData: someOnlineAdvice.treeData,
+    getNodeKey: ({ node }) => node.blockId, // This ensures your "id" properties are exported in the path
+    ignoreCollapsed: false,
+  }).map(({ node, path }) => ({
+    blockId: node.blockId,
+    name: node.name,
+    abrv: node.abrv,
+    blockParent: path.length > 1 ? path[path.length - 2] : '0',
+    data: node.data,
+    date: node.date,
+    leafParent: node.leafParent,
+  }))
 
+  const handleSave = useCallback(() => {
+    flatData.forEach((block) => {
+      axios
+        .put(`http://localhost:7010/blocks/${block.blockId}`, {
+          blockId: block.blockId,
+          blockParent: block.blockParent.toString(),
+          name: block.name,
+          abrv: block.abrv,
+          data: block.data,
+          date: block.date,
+          leafParent: block.leafParent,
+        })
         .then((res) => {
           setBlocksAux(res.data)
-          setBlocks(res.data)
           expandAll()
         })
         .catch((err) => {
           console.log(err)
         })
-    }
+    })
   }, [expandAll, flatData])
 
   const onChange = (treeData: IListBlocks[]) => {
