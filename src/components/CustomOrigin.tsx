@@ -108,7 +108,7 @@ const CustomOrigin = () => {
           abrv: 'Editar Abreviação',
           blockParent,
           leafParent: false,
-          date: new Date().toLocaleDateString(),
+          date: new Date(),
           data: {
             windSpeed: Math.floor(Math.random() * 100),
             solarIrradiation: Math.floor(Math.random() * 100),
@@ -125,6 +125,28 @@ const CustomOrigin = () => {
     [someOnlineAdvice.treeData],
   )
 
+  const handleAddNode = useCallback(
+    (path: number[], blockParent: string) => {
+      addNode(path, blockParent)
+      axios.post('http://localhost:7010/blocks', {
+        blockId: Math.random().toString(36),
+        name: 'Nova Área',
+        abrv: 'Editar Abreviação',
+        blockParent,
+        leafParent: false,
+        date: new Date(),
+        data: {
+          windSpeed: Math.floor(Math.random() * 100),
+          solarIrradiation: Math.floor(Math.random() * 100),
+          temperature: Math.floor(Math.random() * 100),
+          rain: Math.floor(Math.random() * 100),
+          relativeHumidity: Math.floor(Math.random() * 100),
+        },
+      })
+    },
+    [addNode],
+  )
+
   const removeNode = useCallback(
     (path: number[]) => {
       const newBlocks = removeNodeAtPath({
@@ -135,6 +157,14 @@ const CustomOrigin = () => {
       setBlocks(newBlocks)
     },
     [someOnlineAdvice.treeData],
+  )
+
+  const handleRemoveNode = useCallback(
+    (blockId: string, path: number[]) => {
+      removeNode(path)
+      axios.delete(`http://localhost:7010/blocks/${blockId}`)
+    },
+    [removeNode],
   )
 
   return (
@@ -186,22 +216,7 @@ const CustomOrigin = () => {
                 key={node.blockId}
                 variant="primary"
                 onClick={() => {
-                  axios.post('http://localhost:7010/blocks', {
-                    blockId: Math.random().toString(36),
-                    name: 'Nova Área',
-                    abrv: 'Editar Abreviação',
-                    blockParent: node.blockId,
-                    leafParent: false,
-                    date: new Date().toLocaleDateString(),
-                    data: {
-                      windSpeed: Math.floor(Math.random() * 100),
-                      solarIrradiation: Math.floor(Math.random() * 100),
-                      temperature: Math.floor(Math.random() * 100),
-                      rain: Math.floor(Math.random() * 100),
-                      relativeHumidity: Math.floor(Math.random() * 100),
-                    },
-                  })
-                  addNode(path, node.blockId)
+                  handleAddNode(path, node.blockId)
                 }}
               >
                 Criar
@@ -210,8 +225,9 @@ const CustomOrigin = () => {
                 key={node.blockId}
                 variant="secondary"
                 onClick={() => {
-                  axios.delete(`http://localhost:7010/blocks/${node.blockId}`)
-                  removeNode(path)
+                  if (node.blockParent !== '0') {
+                    handleRemoveNode(node.blockId, path)
+                  }
                 }}
               >
                 Remover
