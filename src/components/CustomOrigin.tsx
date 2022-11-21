@@ -213,7 +213,6 @@ const CustomOrigin = () => {
           buttons: [
             <ButtonGroup key={node.blockId}>
               <Button
-                key={node.blockId}
                 variant="primary"
                 onClick={() => {
                   handleAddNode(path, node.blockId)
@@ -222,7 +221,6 @@ const CustomOrigin = () => {
                 Criar
               </Button>
               <Button
-                key={node.blockId}
                 variant="secondary"
                 onClick={() => {
                   if (node.blockParent !== '0') {
