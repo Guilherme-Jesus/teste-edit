@@ -1,11 +1,10 @@
 import './App.css'
-import CustomNosferatu from './components/CustomNosferatu'
-import CustomOrigin from './components/CustomOrigin'
+import Timeline from './components/Timeline'
 
 function App() {
   return (
     <div className="App">
-      <CustomOrigin />
+      <Timeline />
     </div>
   )
 }
